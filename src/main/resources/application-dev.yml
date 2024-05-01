@@ -1,0 +1,42 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    url: jdbc:mysql://111.196.181.143:3306/test_db?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: ~Yagamihxf0
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    database: 0
+    host: www.220910.xyz
+    port: 6379
+    password: ~Yagamihxf0
+    jedis:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 10
+        min-idle: 0
+    timeout: 1000
+  #--------------redis-----------------
+
+#gobrs:
+#  async:
+#    config:
+#      ## 如果规则没有制定 线程池 则使用 统一的线程池配置 如果通过 API 的方式动态更新了线程池 则使用动态更新 替换配置文件线程池配置 参见： ThreadPoolConfig
+#      thread-pool:
+#        core-pool-size: 2
+#        max-pool-size: 20
+#      rules:
+#        - name: "rule1"
+##          content: "as->bs->ds;as->cs->ds"
+#          content: "as->bs->cs"
+#          task-interrupt: false
+#          logConfig:
+#            costLogabled: true # 开启任务耗时打印 log日志级别需要为 error 默认true
+#            errLogabled: true # 开启任务异常打印 默认true
+#
+#        - name: "anyConditionRule"
+#          content: "AServiceCondition,BServiceCondition,CServiceCondition->DServiceCondition:anyCondition"
