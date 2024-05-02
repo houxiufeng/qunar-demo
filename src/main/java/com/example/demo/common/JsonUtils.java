@@ -1,9 +1,13 @@
 package com.example.demo.common;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.MapDifference;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +15,13 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class JsonUtils {
     private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
+    private static TypeReference<HashMap<String, Object>> type = new TypeReference<HashMap<String, Object>>() {};
 
     public JsonUtils() {
     }
@@ -26,6 +32,18 @@ public class JsonUtils {
 
     public static String fromBean(Object object) throws IOException {
         return objectMapper.writeValueAsString(object);
+    }
+
+    public static boolean jsonDiff(String leftJson, String rightJson) {
+        try {
+            Map<String, Object> leftMap = objectMapper.readValue(leftJson, type);
+            Map<String, Object> rightMap = objectMapper.readValue(rightJson, type);
+            MapDifference<String, Object> difference = Maps.difference(leftMap, rightMap);
+            return difference.areEqual();
+        } catch (JsonProcessingException e) {
+            log.error("jsonDiff process error:{}", e);
+        }
+        return false;
     }
 
     public static String toJson(Object object) {

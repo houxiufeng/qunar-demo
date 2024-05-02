@@ -86,15 +86,21 @@ public class TestController {
     }
 
     @RequestMapping(value = "/rule")
-    public String test3(String ruleName) {
+    public String getRule(String ruleName) {
         gobrsService.gobrsTest(ruleName);
         return "ok done";
     }
 
     @PostMapping(value = "/rule")
-    public String test3(@RequestBody RuleDto ruleDto) {
+    public String addRule(@RequestBody RuleDto ruleDto) {
         gobrsService.addRule(ruleDto);
         return "ok launch!";
+    }
+
+    @DeleteMapping(value = "/rule")
+    public String deleteRule(String ruleName) {
+        gobrsService.deleteRule(ruleName);
+        return "ok done";
     }
 
     @GetMapping("/rules")

@@ -6,6 +6,7 @@ import com.gobrs.async.core.GobrsAsync;
 import com.gobrs.async.core.common.domain.AsyncParam;
 import com.gobrs.async.core.common.domain.AsyncResult;
 import com.gobrs.async.core.config.ConfigFactory;
+import com.gobrs.async.core.config.ConfigManager;
 import com.gobrs.async.core.config.GobrsAsyncRule;
 import com.gobrs.async.core.config.GobrsConfig;
 import com.gobrs.async.core.engine.RuleThermalLoad;
@@ -44,6 +45,11 @@ public class GobrsService {
         r.setName(ruleDto.getName());
         r.setContent(ruleDto.getContent());
         ruleLoader.load(r);
+//        ConfigManager.configInstance().addRule(ruleDto.getName(), r);
         configFactory.addRule(ruleDto.getName(), r);
+    }
+
+    public void deleteRule(String ruleName) {
+        configFactory.getProcessRules().remove(ruleName);
     }
 }
